@@ -19,27 +19,31 @@ body {
 #card-container{
     display: flex;
     justify-content: space-evenly;
-    height: 50vh;
+    height: 100vh;
 } 
 
 #p1-current {
+    display: flex;
     float: left;
     justify-content: space-evenly;
     width: 300px;
     overflow: hidden;
-    display: flex;
     flex-direction: column;
     padding: 15px;
     margin: 0;
+    padding-left: 120px;
 }
 
 #p2-current {
+    display: flex;
     float: right;
     justify-content: space-evenly;
-    display: flex;
     width: 300px;
+    overflow: hidden;
+    flex-direction: column;
     padding: 15px;
     margin: 0;
+    padding-right: 120px;
 }
 
 button {
@@ -59,4 +63,22 @@ h2 {
 
 #reset-btn{
     display: none;
+} 
+
+#cpu-card-pic { 
+    height: 200px; 
+} 
+
+#p1-card-pic { 
+    height: 200px;  
+} 
+
+#bottom-container { 
+    position: absolute;
+    bottom: 0;
+} 
+
+#stat-btns {
+    padding-left: 120px;
+    padding-bottom: 200px;
 }
