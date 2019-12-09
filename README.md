@@ -8,8 +8,8 @@
 - Added a condition to end the game when the either player's deck reaches 30 cards. 
 
 #### V2 Features 
-- Added a picture for each player's card 
-- Added CSS Styling 
+- Added a car picture for each player's card.
+- Added CSS Styling.
 
 #### How to use 
 
