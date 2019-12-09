@@ -1,0 +1,62 @@
+body {
+    margin: 0; 
+    padding: 0;
+}
+
+#player-scores {
+    display: flex;
+    justify-content: space-evenly;
+} 
+
+#p1-score {
+    padding: 0px;
+}
+
+#p2-score {
+    padding: 0px;
+}
+
+#card-container{
+    display: flex;
+    justify-content: space-evenly;
+    height: 50vh;
+} 
+
+#p1-current {
+    float: left;
+    justify-content: space-evenly;
+    width: 300px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin: 0;
+}
+
+#p2-current {
+    float: right;
+    justify-content: space-evenly;
+    display: flex;
+    width: 300px;
+    padding: 15px;
+    margin: 0;
+}
+
+button {
+    width: 85px; 
+    height: 50px;
+    text-align: center;
+    margin: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 0px;
+    overflow: hidden;
+}
+
+h2 {
+    height: 30px;
+}
+
+#reset-btn{
+    display: none;
+}
