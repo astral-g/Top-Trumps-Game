@@ -1,5 +1,4 @@
 //Pool of cards
-
 let cards = [
     {index: 1,name: "BMW M3 F80", to60: 4.1, newPrice: 59860, coolFactor: 8, topSpeed: 189, img: 'F80M3.jpg'},
     {index: 2,name: "BMW M4 F82", to60: 3.8, newPrice: 62300, coolFactor: 6, topSpeed: 190, img:'F82M4.jpg'},
@@ -33,50 +32,50 @@ let cards = [
     {index: 30,name: "Toyota GR Supra", to60: 3.8, newPrice: 51384, coolFactor: 10, topSpeed: 163, img: 'GRSUPRA.jpg'}
 ]
 
-// Player cards
-let p1Cards = [];
-let p2Cards = [];
-
 const to60Btn     = document.getElementById("to60-btn");
 const topSpeedBtn = document.getElementById("top-speed-btn");
 const coolBtn     = document.getElementById("cool-factor-btn");
 const priceBtn    = document.getElementById("price-btn");
+const resetBtn    = document.getElementById("reset-btn");
 
-const msgDisplay = document.getElementById("message-display");
-const reset      = document.getElementById("reset-btn");
+let msgDisplay = document.getElementById("message-display");
 
-const p1ScoreDisplay = document.getElementById("p1-score");
-const p2ScoreDisplay = document.getElementById("p2-score");
+let p1ScoreDisplay = document.getElementById("p1-score");
+let p2ScoreDisplay = document.getElementById("p2-score");
 
 let p1CardDisplay  = document.getElementById("p1-card-pic");
 let cpuCardDisplay = document.getElementById("cpu-card-pic");
 
+// Player cards
+let p1Cards = [];
+let p2Cards = [];
 
 // Player 1 & 2 score 
 let p1Score = 0; 
 let p2Score = 0; 
 
 // Current cards in play
-let p1Current = []
-let p2Current = []
+let p1Current = [];
+let p2Current = [];
 
 // Randomly distribute cards to each player
-function init() {
-    let deckLength  = cards.length
-    let p1CardCount = 0
-    let p2CardCount = 0
+function shuffle() {
+    let deckLength  = cards.length;
+    let p1CardCount = 0;
+    let p2CardCount = 0;
 
     while(--deckLength > 0) {
         let cardIdx = Math.floor(Math.random() * (deckLength +1));
-        let randomisedCard = cards.splice(cardIdx, 1)
-        console.log(randomisedCard)
+        let randomisedCard = cards.splice(cardIdx, 1);
+        // Used for debugging purposes
+        console.log(randomisedCard);
 
         if(p1CardCount > p2CardCount) {
-            p2Cards.push(randomisedCard[0])
-            p2CardCount +=1
+            p2Cards.push(randomisedCard[0]);
+            p2CardCount +=1;
         } else if(p1CardCount == p2CardCount) {
-            p1Cards.push(randomisedCard[0])
-            p1CardCount +=1
+            p1Cards.push(randomisedCard[0]);
+            p1CardCount +=1;
         }
     }
 }
@@ -84,27 +83,29 @@ function init() {
 // Current card function which is going to be called back in the top comparison function
 function currentCard() {
     // Select a random card from both player's deck
-    let p1 = Math.floor((Math.random()* p1Cards.length))
-    let p2 = Math.floor((Math.random()* p2Cards.length))
+    let p1 = Math.floor((Math.random()* p1Cards.length));
+    let p2 = Math.floor((Math.random()* p2Cards.length));
 
     // Put both of the selected cards into play
     p1Current.push(p1Cards.splice(p1, 1)[0]);
     p2Current.push(p2Cards.splice(p2, 1)[0]);
 
-    console.log(p1Current[0])
-    console.log(p1Current[0])
+    // Used for debugging purposes
+    console.log(p1Current[0]);
+    console.log(p1Current[0]);
 
-    p1CardDisplay.src  = `images/${p1Current[0].img}` 
-    cpuCardDisplay.src = `images/${p2Current[0].img}`
-};  
+    p1CardDisplay.src  = `images/${p1Current[0].img}`;
+    cpuCardDisplay.src = `images/${p2Current[0].img}`;
+}
 
 function compareStat(stat) {
 
+    // Used for debugging purposes
     console.log(`the p1 ${stat} is: ${p1Current[0][stat]}`)
     console.log(`the p2 ${stat} is: ${p2Current[0][stat]}`)
 
-    let p1Stat = p1Current[0][stat]
-    let p2Stat = p2Current[0][stat]
+    let p1Stat = p1Current[0][stat];
+    let p2Stat = p2Current[0][stat];
 
     if(stat == "newPrice" || stat == "coolFactor" || stat == "topSpeed") {
         if (p1Stat > p2Stat) {
@@ -125,43 +126,63 @@ function compareStat(stat) {
             processOutcome("stalemate");
         }
     }
-};
+}
 
 function processOutcome(outcome) {
     if(outcome == "p1-win"){
-        p1Score += 1 
-        p1ScoreDisplay.textContent = `Player one score: ${p1Score}`
-        p1Cards.push(p2Current.splice(0,1)[0])
-        p1Cards.push(p1Current.splice(0,1)[0])
-        console.log("p1 wins the round!")
+        p1Score +=1;
+        p1ScoreDisplay.textContent = `Player one score: ${p1Score}`;
+        p1Cards.push(p2Current.splice(0,1)[0]);
+        p1Cards.push(p1Current.splice(0,1)[0]);
+        console.log("p1 wins the round!");
 
-        msgDisplay.textContent = `Player one wins the round!`
-        setTimeout( () => {msgDisplay.style.display = "none";
+        msgDisplay.textContent = `Player one wins the round!`;
+        setTimeout( () => {msgDisplay.style.display = "none"
         }, 2000);
-        playGame()
+        playGame();
     } else if(outcome == "p2-win"){
-        p2Score += 1 
-        p2ScoreDisplay.textContent = `Player two score: ${p2Score}`
-        p2Cards.push(p1Current.splice(0,1)[0])
-        p2Cards.push(p2Current.splice(0,1)[0])
-        console.log("p2 wins the round!")
+        p2Score +=1 
+        p2ScoreDisplay.textContent = `Player two score: ${p2Score}`;
+        p2Cards.push(p1Current.splice(0,1)[0]);
+        p2Cards.push(p2Current.splice(0,1)[0]);
+        console.log("p2 wins the round!");
 
-        msgDisplay.textContent = `Player two wins the round!`
-        setTimeout( () => {msgDisplay.style.display = "none";
+        msgDisplay.textContent = `Player two wins the round!`;
+        setTimeout( () => {msgDisplay.style.display = "none"
         }, 2000);
-        playGame()
+        playGame();
     } else {
-        msgDisplay.textContent = `This round is a tie!`
-        p1Cards.push(p1Current.splice(0,1)[0])
-        p2Cards.push(p2Current.splice(0,1)[0])
-        playGame()
+        msgDisplay.textContent = `This round is a tie!`;
+        p1Cards.push(p1Current.splice(0,1)[0]);
+        p2Cards.push(p2Current.splice(0,1)[0]);
+        playGame();
     }
-};
+}
 
-reset.addEventListener("click", () => {
+function playGame() { 
+    if(p1Cards.length < 30 && p2Cards.length < 30 ){ 
+        currentCard();
+    } else if (p1Cards.length == 30 ){
+        msgDisplay.textContent = "Player two wins!";
+        resetBtn.style.display= "block";
+        to60Btn.style.display = "none";
+        topSpeedBtn.style.display = "none";
+        coolBtn.style.display = "none";
+        priceBtn.style.display = "none";
+    } else if (p2Cards.length == 30){
+        msgDisplay.textContent = "Player one wins!";
+        resetBtn.style.display = "block";
+        to60Btn.style.display = "none";
+        topSpeedBtn.style.display = "none";
+        coolBtn.style.display = "none";
+        priceBtn.style.display = "none";
+    } 
+}
+
+resetBtn.addEventListener("click", () => {
     p1Score = 0; 
     p2Score = 0; 
-    msgDisplay.style.display="none"
+    msgDisplay.style.display="none";
     currentCard();
 })  
 
@@ -181,25 +202,5 @@ priceBtn.addEventListener("click", () => {
     compareStat("newPrice");
 })
 
-const playGame = () => { 
-    if(p1Cards.length < 30 && p2Cards.length < 30 ){ 
-        currentCard();
-    } else if (p1Cards.length == 30 ){
-        msgDisplay.textContent = "Player two wins!"
-        reset.style.display= "block"
-        to60Btn.style.display = "none"
-        topSpeedBtn.style.display = "none"
-        coolBtn.style.display = "none"
-        priceBtn.style.display = "none"
-    } else if (p2Cards.length == 30){
-        msgDisplay.textContent = "Player one wins!"
-        reset.style.display = "block"
-        to60Btn.style.display = "none"
-        topSpeedBtn.style.display = "none"
-        coolBtn.style.display = "none"
-        priceBtn.style.display = "none"
-    } 
-}
-
-init();
+shuffle();
 currentCard();
