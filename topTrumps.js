@@ -1,5 +1,5 @@
 //Pool of cards
-let cards = [
+const cards = [
     {index: 1,name: "BMW M3 F80", to60: 4.1, newPrice: 59860, coolFactor: 8, topSpeed: 189, img: 'F80M3.jpg'},
     {index: 2,name: "BMW M4 F82", to60: 3.8, newPrice: 62300, coolFactor: 6, topSpeed: 190, img:'F82M4.jpg'},
     {index: 3,name: "Alfa Romeo Giulia Quadrifoglio", to60: 3.6, newPrice: 62924, coolFactor: 10, topSpeed: 190.8, img: 'ALFAGIULIA.jpg' },
@@ -25,7 +25,7 @@ let cards = [
     {index: 23,name: "Alfa Romeo Mito Cloverleaf", to60: 7.5, newPrice: 17895, coolFactor: 6, topSpeed: 136, img: 'MITO.jpg' },
     {index: 24,name: "BMW M2 Competition Pack", to60: 4.4, newPrice: 49805, coolFactor: 8.5, topSpeed: 170, img:'M2COMP.jpg'},
     {index: 25,name: "Peugeot 208 GTI", to60: 6.5, newPrice: 22184, coolFactor: 2, topSpeed: 143, img:'208GTI.jpg'},
-    {index: 26,name: "Volkswagen Golf GTI Clubsport", to60: 5.9, newPrice: 30875, coolFactor: 4, topSpeed: 156, img:'GTICLUBSPORt1.jpg'},
+    {index: 26,name: "Volkswagen Golf GTI Clubsport", to60: 5.9, newPrice: 30875, coolFactor: 4, topSpeed: 156, img:'GTICLUBSPORT1.jpg'},
     {index: 27,name: "Kia Stinger GT", to60: 4.7, newPrice: 30970, coolFactor: 4, topSpeed: 167, img:'STINGERGT.jpg'},
     {index: 28,name: "Mercedes G Class AMG", to60: 4.4, newPrice: 140520, coolFactor: 1, topSpeed: 186, img:'G62AMG.jpg'},
     {index: 29,name: "Porsche 718 Cayman", to60: 4.9, newPrice: 53746, coolFactor: 5.5, topSpeed: 170, img:'718CAYMAN.jpg'},
@@ -38,25 +38,25 @@ const coolBtn     = document.getElementById("cool-factor-btn");
 const priceBtn    = document.getElementById("price-btn");
 const resetBtn    = document.getElementById("reset-btn");
 
-let msgDisplay = document.getElementById("message-display");
+const msgDisplay = document.getElementById("message-display");
 
-let p1ScoreDisplay = document.getElementById("p1-score");
-let p2ScoreDisplay = document.getElementById("p2-score");
+const p1ScoreDisplay = document.getElementById("p1-score");
+const p2ScoreDisplay = document.getElementById("p2-score");
 
-let p1CardDisplay  = document.getElementById("p1-card-pic");
-let cpuCardDisplay = document.getElementById("cpu-card-pic");
+const p1CardDisplay  = document.getElementById("p1-card-pic");
+const cpuCardDisplay = document.getElementById("cpu-card-pic");
 
 // Player cards
-let p1Cards = [];
-let p2Cards = [];
+const p1Cards = [];
+const p2Cards = [];
 
 // Player 1 & 2 score 
 let p1Score = 0; 
 let p2Score = 0; 
 
 // Current cards in play
-let p1Current = [];
-let p2Current = [];
+const p1Current = [];
+const p2Current = [];
 
 // Randomly distribute cards to each player
 function shuffle() {
@@ -67,8 +67,6 @@ function shuffle() {
     while(--deckLength > 0) {
         let cardIdx = Math.floor(Math.random() * (deckLength +1));
         let randomisedCard = cards.splice(cardIdx, 1);
-        // Used for debugging purposes
-        console.log(randomisedCard);
 
         if(p1CardCount > p2CardCount) {
             p2Cards.push(randomisedCard[0]);
@@ -92,7 +90,7 @@ function currentCard() {
 
     // Used for debugging purposes
     console.log(p1Current[0]);
-    console.log(p1Current[0]);
+    console.log(p2Current[0]);
 
     p1CardDisplay.src  = `images/${p1Current[0].img}`;
     cpuCardDisplay.src = `images/${p2Current[0].img}`;
@@ -107,7 +105,7 @@ function compareStat(stat) {
     let p1Stat = p1Current[0][stat];
     let p2Stat = p2Current[0][stat];
 
-    if(stat == "newPrice" || stat == "coolFactor" || stat == "topSpeed") {
+    if(stat === "newPrice" || stat === "coolFactor" || stat === "topSpeed") {
         if (p1Stat > p2Stat) {
             processOutcome("p1-win");
         } else if (p2Stat > p1Stat){
@@ -129,59 +127,66 @@ function compareStat(stat) {
 }
 
 function processOutcome(outcome) {
-    if(outcome == "p1-win"){
-        p1Score +=1;
+    const isP1Win = outcome === "p1-win";
+    const isP2Win = outcome === "p2-win";
+    const winnerText = isP1Win ? "one" : "two";
+    const tieMessage = "This round is a tie!";
+    const winnerMessage = `Player ${winnerText} wins the round`
+
+    if(isP1Win) {
+        p1Score+=1;
         p1ScoreDisplay.textContent = `Player one score: ${p1Score}`;
+
         p1Cards.push(p2Current.splice(0,1)[0]);
         p1Cards.push(p1Current.splice(0,1)[0]);
-        console.log("p1 wins the round!");
-
-        msgDisplay.textContent = `Player one wins the round!`;
-        setTimeout( () => {msgDisplay.style.display = "none"
-        }, 2000);
-        playGame();
-    } else if(outcome == "p2-win"){
-        p2Score +=1 
+    } else if(isP2Win) {
+        p2Score+=1;
         p2ScoreDisplay.textContent = `Player two score: ${p2Score}`;
+
         p2Cards.push(p1Current.splice(0,1)[0]);
         p2Cards.push(p2Current.splice(0,1)[0]);
-        console.log("p2 wins the round!");
-
-        msgDisplay.textContent = `Player two wins the round!`;
-        setTimeout( () => {msgDisplay.style.display = "none"
-        }, 2000);
-        playGame();
     } else {
-        msgDisplay.textContent = `This round is a tie!`;
         p1Cards.push(p1Current.splice(0,1)[0]);
         p2Cards.push(p2Current.splice(0,1)[0]);
-        playGame();
     }
+    
+    if(isP1Win || isP2Win) {
+        msgDisplay.textContent = winnerMessage;
+    } else {
+        msgDisplay.textContent = tieMessage;
+    }
+    resetMsgDisplay();
+
+    setTimeout( () => {msgDisplay.style.display = "none"}, 2000);
+    playGame();
 }
 
 function playGame() { 
     if(p1Cards.length < 30 && p2Cards.length < 30 ){ 
         currentCard();
-    } else if (p1Cards.length == 30 ){
-        msgDisplay.textContent = "Player two wins!";
-        resetBtn.style.display= "block";
-        to60Btn.style.display = "none";
-        topSpeedBtn.style.display = "none";
-        coolBtn.style.display = "none";
-        priceBtn.style.display = "none";
-    } else if (p2Cards.length == 30){
-        msgDisplay.textContent = "Player one wins!";
-        resetBtn.style.display = "block";
-        to60Btn.style.display = "none";
-        topSpeedBtn.style.display = "none";
-        coolBtn.style.display = "none";
-        priceBtn.style.display = "none";
+    } else if (p1Cards.length === 30 ){
+        msgDisplay.textContent = "Player two wins the game!";
+        hideButtons();
+    } else if (p2Cards.length === 30){
+        msgDisplay.textContent = "Player one wins the game!";
+        hideButtons();
     } 
 }
 
+function hideButtons() {
+    resetBtn.style.display = "block";
+    to60Btn.style.display = "none";
+    topSpeedBtn.style.display = "none";
+    coolBtn.style.display = "none";
+    priceBtn.style.display = "none";
+}
+
+const resetMsgDisplay = () => msgDisplay.style.display = "inline-block";
+
 resetBtn.addEventListener("click", () => {
-    p1Score = 0; 
-    p2Score = 0; 
+    p1Score = 0;
+    p2Score = 0;
+
     msgDisplay.style.display="none";
     currentCard();
 })  
