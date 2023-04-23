@@ -60,14 +60,12 @@ const p2Current = [];
 
 // Randomly distribute cards to each player
 function shuffle() {
-    let deckLength  = cards.length;
+    const deckLength  = cards.length;
     let p1CardCount = 0;
     let p2CardCount = 0;
 
     for(let i = deckLength; i > 0; i--) {
-        // console.log("i equals: ", i)
         let cardIdx = Math.floor(Math.random() * i );
-        // console.log("card idx is: ", cardIdx)
         let randomisedCard = cards.splice(cardIdx, 1);
 
         if(p1CardCount > p2CardCount) {
@@ -78,8 +76,6 @@ function shuffle() {
             p1CardCount +=1;
         }
     }
-    console.log("p1 cards", p1Cards);
-    console.log("p2 cards", p2Cards);
 }
 
 function compareStat(stat) {
