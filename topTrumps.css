@@ -1,84 +1,148 @@
+/* Set up the background and fonts */
+
 body {
-    margin: 0; 
-    padding: 0;
+    background-color: #002233;
+    font-family: Arial, sans-serif;
+    color: white;
 }
-
-#player-scores {
+  
+  /* Center the main container, and set its size */
+  
+#main-container {
+    margin: auto;
+    width: 1000px;
+    height: 1000px;
+    border-radius: 10px;
+    background-color: #112233;
     display: flex;
-    justify-content: space-evenly;
-} 
-
-#p1-score {
-    padding: 0px;
-}
-
-#p2-score {
-    padding: 0px;
-}
-
-#card-container{
-    display: flex;
-    justify-content: space-evenly;
-    height: 100vh;
-} 
-
-#p1-current {
-    display: flex;
-    float: left;
-    justify-content: space-evenly;
-    width: 300px;
-    overflow: hidden;
     flex-direction: column;
-    padding: 15px;
-    margin: 0;
-    padding-left: 120px;
+    justify-content: space-between;
+    align-items: center;
 }
-
-#p2-current {
+  
+  /* Style the score and card containers */
+  
+#score-container {
     display: flex;
-    float: right;
-    justify-content: space-evenly;
-    width: 300px;
-    overflow: hidden;
-    flex-direction: column;
-    padding: 15px;
-    margin: 0;
-    padding-right: 120px;
+    padding: 10px;
+    justify-content: center;
 }
 
-button {
-    width: 85px; 
-    height: 50px;
+#score-container div {
+    padding: 20px;
+}
+
+/* Style the message display */
+
+#message-display {
+    font-size: 24px;
     text-align: center;
-    margin: 0;
-    margin-top: 5px;
-    margin-right: 5px;
-    padding: 0px;
-    overflow: hidden;
+    margin: 20px;
 }
 
-h2 {
-    height: 30px;
+/* Style the player one card */
+#p1-current {
+    border: 5px solid #c70000;
+    border-radius: 5px;
+    padding: 10px;
+    margin-right: 20px;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    animation: slideInLeft 1s ease forwards;
 }
 
-#reset-btn{
-    display: none;
-} 
+#p1-current h2 {
+    margin-top: 0;
+    font-size: 28px;
+    text-align: center;
+    color: #c70000;
+}
 
-#cpu-card-pic { 
-    height: 200px; 
-} 
+#p1-current img, #p2-current img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
 
-#p1-card-pic { 
-    height: 200px;  
-} 
+/* Style the player two card */
+#p2-current {
+    border: 5px solid #00aeef;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 20px;
+    background-color: #333;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    animation: slideInRight 1s ease forwards;
+}
 
-#bottom-container { 
-    position: absolute;
-    bottom: 0;
-} 
+#p2-current h2 {
+    margin-top: 0;
+    font-size: 28px;
+    text-align: center;
+    color: #00aeef;
+}
 
-#stat-btns {
-    padding-left: 120px;
-    padding-bottom: 200px;
+#p1-current, #p2-current {
+    width: 400px;
+    height: 500px;
+    margin: 0 10px;
+}
+
+#top-trumps-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+/* Style the button container */
+#button-container {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Style the buttons */
+button {
+    height: 50px;
+    width: 100px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 5px 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #c70000;
+    box-shadow: 0 0 10px rgba(199, 0, 0, 0.5);
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Animations */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }

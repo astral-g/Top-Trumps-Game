@@ -8,41 +8,46 @@
     <title>Top-Trumps</title>
 </head>
 <body>
-    
-    <div><h1 id="message-display"></h1></div>
+   <div id="main-container"> 
+        <div><h1 id="message-display"></h1></div>
 
-    <div id="p1-current">
-        <div>
-            <h2 id="p1-score">Player one score: 0</h2> 
+        <div id="score-container">
+            <div>
+                <h2 id="p1-score">Player one score: 0</h2> 
+            </div>
+            <div>
+                <h2 id="p2-score">CPU score: 0</h2>
+            </div>
+        </div> 
+
+        <div id="top-trumps-container">
+            <div id="p1-current">
+                <div>
+                    <h2>Player one's card</h2>
+                    <img id="p1-card-pic" src="">
+                </div>
+            </div>
+
+            <div id="p2-current">
+                <div>
+                    <h2>CPU's card</h2>
+                    <img id="cpu-card-pic" src="">
+                </div>
+            </div>
         </div>
-        <div>
-            <h2>Player one's card</h2>
-            <img id="p1-card-pic" src="">
-        </div>
-        
 
-    </div>
-
-    <div id="p2-current">
-        <div>
-            <h2 id="p2-score">Player two score: 0</h2>
-        </div>
-            <h2>Player two's card</h2>
-            <img id="cpu-card-pic" src="">
-        </div>
-    </div>
-
-    <div>
-        <button id="reset-btn">Play Again?</button>
-    </div>  
-
-    <div id='bottom-container'>
-        <div id='stat-btns'>
-            <button id="to60-btn">0-60</button> 
-            <button id="top-speed-btn">Top Speed</button>
-            <br>
-            <button id="cool-factor-btn">Cool Factor</button>
-            <button id="price-btn">Price</button>
+        <div id='button-container'>
+            <div>
+                <button id="reset-btn">Play Again?</button>
+            </div> 
+            
+            <div id='stat-btns'>
+                <button id="to60-btn">0-60</button> 
+                <button id="top-speed-btn">Top Speed</button>
+                <br>
+                <button id="cool-factor-btn">Cool Factor</button>
+                <button id="price-btn">Price</button>
+            </div>
         </div>
     </div>
 <script src="topTrumps.js"></script>

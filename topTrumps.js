@@ -78,24 +78,6 @@ function shuffle() {
     }
 }
 
-// Current card function which is going to be called back in the top comparison function
-function currentCard() {
-    // Select a random card from both player's deck
-    let p1 = Math.floor((Math.random()* p1Cards.length));
-    let p2 = Math.floor((Math.random()* p2Cards.length));
-
-    // Put both of the selected cards into play
-    p1Current.push(p1Cards.splice(p1, 1)[0]);
-    p2Current.push(p2Cards.splice(p2, 1)[0]);
-
-    // Used for debugging purposes
-    console.log(p1Current[0]);
-    console.log(p2Current[0]);
-
-    p1CardDisplay.src  = `images/${p1Current[0].img}`;
-    cpuCardDisplay.src = `images/${p2Current[0].img}`;
-}
-
 function compareStat(stat) {
 
     // Used for debugging purposes
@@ -128,11 +110,8 @@ function compareStat(stat) {
 
 function processOutcome(outcome) {
     const isP1Win = outcome === "p1-win";
-    const isP2Win = outcome === "p2-win";
-    const winnerText = isP1Win ? "one" : "two";
-    const tieMessage = "This round is a tie!";
-    const winnerMessage = `Player ${winnerText} wins the round`
-
+    const isP2Win = outcome === "p2-win"
+ 
     if(isP1Win) {
         p1Score+=1;
         p1ScoreDisplay.textContent = `Player one score: ${p1Score}`;
@@ -149,7 +128,12 @@ function processOutcome(outcome) {
         p1Cards.push(p1Current.splice(0,1)[0]);
         p2Cards.push(p2Current.splice(0,1)[0]);
     }
-    
+
+
+    const winnerText = isP1Win ? "one" : "two";
+    const tieMessage = "This round is a tie!";
+    const winnerMessage = `Player ${winnerText} wins the round`
+   
     if(isP1Win || isP2Win) {
         msgDisplay.textContent = winnerMessage;
     } else {
@@ -160,6 +144,8 @@ function processOutcome(outcome) {
     setTimeout( () => {msgDisplay.style.display = "none"}, 2000);
     playGame();
 }
+
+const resetMsgDisplay = () => msgDisplay.style.display = "inline-block";
 
 function playGame() { 
     if(p1Cards.length < 30 && p2Cards.length < 30 ){ 
@@ -181,7 +167,19 @@ function hideButtons() {
     priceBtn.style.display = "none";
 }
 
-const resetMsgDisplay = () => msgDisplay.style.display = "inline-block";
+// Current card function which is going to be called back in the top comparison function
+function currentCard() {
+    // Select a random card from both player's deck
+    let p1 = Math.floor((Math.random()* p1Cards.length));
+    let p2 = Math.floor((Math.random()* p2Cards.length));
+
+    // Put both of the selected cards into play
+    p1Current.push(p1Cards.splice(p1, 1)[0]);
+    p2Current.push(p2Cards.splice(p2, 1)[0]);
+
+    p1CardDisplay.src  = `images/${p1Current[0].img}`;
+    cpuCardDisplay.src = `images/${p2Current[0].img}`;
+}
 
 resetBtn.addEventListener("click", () => {
     p1Score = 0;
@@ -189,23 +187,23 @@ resetBtn.addEventListener("click", () => {
 
     msgDisplay.style.display="none";
     currentCard();
-})  
+});  
 
 to60Btn.addEventListener("click", () => {
     compareStat("to60");
-})
+});
 
 topSpeedBtn.addEventListener("click", () => {
     compareStat("topSpeed");
-})
+});
 
 coolBtn.addEventListener("click", () => {
     compareStat("coolFactor");
-})
+});
 
 priceBtn.addEventListener("click", () => {
     compareStat("newPrice");
-})
+});
 
 shuffle();
 currentCard();
