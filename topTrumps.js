@@ -64,8 +64,8 @@ function shuffle() {
     let p1CardCount = 0;
     let p2CardCount = 0;
 
-    while(--deckLength > 0) {
-        let cardIdx = Math.floor(Math.random() * (deckLength +1));
+    for(let i = deckLength; i > 0; i--) {
+        let cardIdx = Math.floor(Math.random() * (i - 1));
         let randomisedCard = cards.splice(cardIdx, 1);
 
         if(p1CardCount > p2CardCount) {
