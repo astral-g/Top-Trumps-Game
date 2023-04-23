@@ -30,7 +30,7 @@ const cards = [
     {index: 28,name: "Mercedes G Class AMG", to60: 4.4, newPrice: 140520, coolFactor: 1, topSpeed: 186, img:'G62AMG.jpg'},
     {index: 29,name: "Porsche 718 Cayman", to60: 4.9, newPrice: 53746, coolFactor: 5.5, topSpeed: 170, img:'718CAYMAN.jpg'},
     {index: 30,name: "Toyota GR Supra", to60: 3.8, newPrice: 51384, coolFactor: 10, topSpeed: 163, img: 'GRSUPRA.jpg'}
-]
+];
 
 const to60Btn     = document.getElementById("to60-btn");
 const topSpeedBtn = document.getElementById("top-speed-btn");
