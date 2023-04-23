@@ -174,13 +174,15 @@ function hideButtons() {
 // Current card function which is going to be called back in the top comparison function
 function currentCard() {
     // Select a random card from both player's deck
-    const p1 = Math.floor((Math.random()* p1Cards.length));
-    const p2 = Math.floor((Math.random()* p2Cards.length));
+    const p1 = Math.floor((Math.random() * p1Cards.length));
+    const p2 = Math.floor((Math.random() * p2Cards.length));
 
     // Put both of the randomly selected cards of each player, into play
     p1Current.push(p1Cards.splice(p1, 1)[0]);
     p2Current.push(p2Cards.splice(p2, 1)[0]);
 
+    // Potential improvement: break the below code into its own method "populateCardDisplay"
+    // Then expose data that is stored in the object, such as the name of the car & the human player's car stats 
     p1CardDisplay.src  = `images/${p1Current[0].img}`;
     cpuCardDisplay.src = `images/${p2Current[0].img}`;
 }
