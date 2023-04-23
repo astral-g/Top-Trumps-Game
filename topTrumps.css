@@ -130,6 +130,10 @@ button:focus {
     outline: none;
 }
 
+#reset-btn {
+    display: none;
+}
+
 /* Animations */
 @keyframes slideInLeft {
     from {
