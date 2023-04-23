@@ -71,7 +71,7 @@ function shuffle() {
         if(p1CardCount > p2CardCount) {
             p2Cards.push(randomisedCard[0]);
             p2CardCount +=1;
-        } else if(p1CardCount == p2CardCount) {
+        } else if(p1CardCount === p2CardCount) {
             p1Cards.push(randomisedCard[0]);
             p1CardCount +=1;
         }
@@ -80,37 +80,34 @@ function shuffle() {
 
 function compareStat(stat) {
 
-    // Used for debugging purposes
-    console.log(`the p1 ${stat} is: ${p1Current[0][stat]}`)
-    console.log(`the p2 ${stat} is: ${p2Current[0][stat]}`)
+    const p1Stat = p1Current[0][stat];
+    const p2Stat = p2Current[0][stat];
 
-    let p1Stat = p1Current[0][stat];
-    let p2Stat = p2Current[0][stat];
-
-    if(stat === "newPrice" || stat === "coolFactor" || stat === "topSpeed") {
-        if (p1Stat > p2Stat) {
-            processOutcome("p1-win");
-        } else if (p2Stat > p1Stat){
-            processOutcome("p2-win");
-        } else {
-            processOutcome("stalemate");
-        }
-    } 
-    
-    if(stat == "to60"){
-        if(p1Stat < p2Stat){
-            processOutcome("p1-win");
-        } else if (p2Stat < p1Stat){
-            processOutcome("p2-win");
-        } else {
-            processOutcome("stalemate");
-        }
+    switch(stat) {
+        case "newPrice":
+        case "coolFactor":
+        case "topSpeed":
+            if (p1Stat > p2Stat) {
+                processRoundOutcome("p1-win");
+            } else if (p2Stat > p1Stat){
+                processRoundOutcome("p2-win");
+            } else {
+                processRoundOutcome("stalemate");
+            }
+        case "to60":
+            if(p1Stat < p2Stat){
+                processRoundOutcome("p1-win");
+            } else if (p2Stat < p1Stat){
+                processRoundOutcome("p2-win");
+            } else {
+                processRoundOutcome("stalemate");
+            }
     }
 }
 
-function processOutcome(outcome) {
+function processRoundOutcome(outcome) {
     const isP1Win = outcome === "p1-win";
-    const isP2Win = outcome === "p2-win"
+    const isP2Win = outcome === "p2-win";
  
     if(isP1Win) {
         p1Score+=1;
@@ -129,7 +126,6 @@ function processOutcome(outcome) {
         p2Cards.push(p2Current.splice(0,1)[0]);
     }
 
-
     const winnerText = isP1Win ? "one" : "two";
     const tieMessage = "This round is a tie!";
     const winnerMessage = `Player ${winnerText} wins the round`
@@ -147,16 +143,23 @@ function processOutcome(outcome) {
 
 const resetMsgDisplay = () => msgDisplay.style.display = "inline-block";
 
-function playGame() { 
+function playGame() {
+    // If both players have less than 30 cards in their deck (meaning one player has not acquired the other's cards)
+    // Then put a random card from each player's deck, into play
     if(p1Cards.length < 30 && p2Cards.length < 30 ){ 
         currentCard();
-    } else if (p1Cards.length === 30 ){
-        msgDisplay.textContent = "Player two wins the game!";
+        return
+    }
+
+    const isP1Win = p1Cards.length === 30;
+    const isP2Win = p2Cards.length === 30;
+    const winnerText = isP1Win ? "one" : "two";
+    const winnerMessage = `Player ${winnerText} wins the game`;
+
+    if (isP1Win || isP2Win){
+        msgDisplay.textContent = winnerMessage; 
         hideButtons();
-    } else if (p2Cards.length === 30){
-        msgDisplay.textContent = "Player one wins the game!";
-        hideButtons();
-    } 
+    }
 }
 
 function hideButtons() {
@@ -170,10 +173,10 @@ function hideButtons() {
 // Current card function which is going to be called back in the top comparison function
 function currentCard() {
     // Select a random card from both player's deck
-    let p1 = Math.floor((Math.random()* p1Cards.length));
-    let p2 = Math.floor((Math.random()* p2Cards.length));
+    const p1 = Math.floor((Math.random()* p1Cards.length));
+    const p2 = Math.floor((Math.random()* p2Cards.length));
 
-    // Put both of the selected cards into play
+    // Put both of the randomly selected cards of each player, into play
     p1Current.push(p1Cards.splice(p1, 1)[0]);
     p2Current.push(p2Cards.splice(p2, 1)[0]);
 
