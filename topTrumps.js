@@ -79,7 +79,6 @@ function shuffle() {
 }
 
 function compareStat(stat) {
-
     const p1Stat = p1Current[0][stat];
     const p2Stat = p2Current[0][stat];
 
@@ -94,6 +93,7 @@ function compareStat(stat) {
             } else {
                 processRoundOutcome("stalemate");
             }
+        break;
         case "to60":
             if(p1Stat < p2Stat){
                 processRoundOutcome("p1-win");
@@ -102,6 +102,7 @@ function compareStat(stat) {
             } else {
                 processRoundOutcome("stalemate");
             }
+        break;
     }
 }
 
